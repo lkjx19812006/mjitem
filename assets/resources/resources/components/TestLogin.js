@@ -7,7 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-var LoginManager = require("LoginManager")
+
 cc.Class({
     extends: cc.Component,
 
@@ -27,25 +27,19 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
-        xieyiCheck: cc.Toggle,//协议按钮
-        weixinLoginBn: cc.Node,
-        testLoginCom: ''
+        editBox: cc.EditBox
+    },
+    setLoginEvents(cb) {
+        this.loginEvent = cb
+    },
+
+    onButtonClickEvent() {
+        this.loginEvent(this.editBox.string)
     },
 
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad() {
-        this.testLoginCom.setLoginEvents(function (account) {
-            LoginManager.testLogin(account)
-        })
-
-        // console.log(this.testLoginCom.setLoginEvents)
-        // this.weixinLoginBn.on(cc.Node.EventType.TOUCH_START, args => {
-        //     if (!this.xieyiCheck.isChecked) return;
-        //     cc.log('执行登陆')
-        // }, this)
-
-    },
+    // onLoad () {},
 
     start() {
 
