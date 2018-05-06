@@ -1,6 +1,3 @@
-/**
- * Created by litengfei on 2018/1/28.
- */
 class User{
 
 }

@@ -17,7 +17,10 @@ class LoginManager {
             //登陆成功
             cc.log('登陆成功')
             NetWorkManager.connectAndAuthToHall(res.account, res.pass, res.hallUrl);
-
+            //校验成功 跳转到hall页面
+            NetWorkManager.onConnectedToHall(() => {
+                cc.director.loadScene("hall");
+            })
         }, err => {
             console.log(err)
         })
