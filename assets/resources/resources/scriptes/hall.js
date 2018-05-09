@@ -45,10 +45,9 @@ cc.Class({
         //进入大厅 调用服务器方法
         NetWorkManager.onConnectedToHall((hallService) => {
             this.hallService = hallService
-
             console.log('进入大厅界面成功')
-            hallService.emit('getPlayerBaseInfo', User.account, User.pass, (data) => {
-                if (data.ok && data.code === '1c0e') {//获取信息成功
+            this.hallService.emit('getPlayerBaseInfo', User.account, User.pass, (data) => {
+                if (data.ok && data.suc) {//获取信息成功
                     var baseInfo = data.data;
                     this.playerName.string = baseInfo.nickname;
                     this.playerId.string = baseInfo.id;
@@ -62,17 +61,34 @@ cc.Class({
                     console.log('获取信息失败')
                 }
             })
-
-            //调用服务
-            hallService.emit('createroom', function(data){
-                console.log(JSON.stringify(data))
-            })  
-
         })
 
+        //监听创建房间事件            
+        this.createRoomBn.on(cc.Node.EventType.TOUCH_START, args => {
+            this.createRoom()
+        }, this)
 
-       
+        //监听加入房间事件
+        this.enterRoomBn.on(cc.Node.EventType.TOUCH_START, args => {
+            this.joinRoom()
+        }, this)
+
     },
+
+    createRoom() {
+        if (!this.hallService) return;
+        this.hallService.emit('createroom', (data) => {
+            console.log(data)
+        })
+    },
+    joinRoom() {
+        if (!this.hallService) return;
+        this.hallService.emit('joinroom', (data) => {
+            console.log(data)
+        })
+    }
+
+
 
     // update (dt) {},
 });
