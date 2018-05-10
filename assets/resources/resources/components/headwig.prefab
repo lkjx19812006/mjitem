@@ -268,7 +268,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "215b0cb8-d426-4f2d-a3be-7a09310603e7"
     },
     "fileId": "5e33ZoKRxIT5IP4aTIhu+5",
     "sync": false
@@ -305,7 +305,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "215b0cb8-d426-4f2d-a3be-7a09310603e7"
     },
     "fileId": "c56PEnVrlNObYrLTyf+MMk",
     "sync": false
@@ -341,11 +341,11 @@
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 0.5,
-      "y": 0.5
+      "y": 1
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 40,
+      "width": 70,
       "height": 20
     },
     "_rotationX": 0,
@@ -355,7 +355,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": -47
+      "y": -37
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -376,15 +376,15 @@
     "_actualFontSize": 20,
     "_fontSize": 20,
     "_lineHeight": 20,
-    "_enableWrapText": true,
+    "_enableWrapText": false,
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "测试",
-    "_N$horizontalAlign": 1,
-    "_N$verticalAlign": 1,
+    "_N$string": "场合asdfa",
+    "_N$horizontalAlign": 0,
+    "_N$verticalAlign": 0,
     "_N$fontFamily": "Arial",
-    "_N$overflow": 0
+    "_N$overflow": 1
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -392,7 +392,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "215b0cb8-d426-4f2d-a3be-7a09310603e7"
     },
     "fileId": "51PeilWAxEq4sSyecbxMSc",
     "sync": false
@@ -428,7 +428,7 @@
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 0.5,
-      "y": 0.5
+      "y": 1
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -442,7 +442,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": -81
+      "y": -70
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -479,7 +479,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "215b0cb8-d426-4f2d-a3be-7a09310603e7"
     },
     "fileId": "fd+ELvpWZLRL7XFoDZCQ9y",
     "sync": false
@@ -516,7 +516,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "215b0cb8-d426-4f2d-a3be-7a09310603e7"
     },
     "fileId": "fchMF+hMFAX4a2nH20Vfzy",
     "sync": false
@@ -527,7 +527,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "215b0cb8-d426-4f2d-a3be-7a09310603e7"
     },
     "fileId": "5a1J+aTbRMNIfznQUcwfJF",
     "sync": false
