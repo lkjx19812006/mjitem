@@ -27,25 +27,14 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
-        hideNode: cc.Node,
-        hideAnimationClip: cc.AnimationClip
+        maskWrap: cc.Node
     },
 
     // LIFE-CYCLE CALLBACKS:
-
-    onLoad() {
-        //创建一个动画组建
-        var self = this;
-        var animation = this.hideNode.addComponent(cc.Animation);
-        //添加动画
-        animation.addClip(this.hideAnimationClip, 'hide');
-        this.node.on(cc.Node.EventType.TOUCH_START, function (args) {
-            animation.play('hide')
-            //动画时间是200毫秒
-            setTimeout(function () {
-                self.hideNode.active = false
-            }, 200)
-        }, this)
+    onLoad: function () {
+        this.maskWrap.on(cc.Node.EventType.TOUCH_START, function (event) {
+            event.stopPropagation();
+        }, this.node);
     },
 
     start() {

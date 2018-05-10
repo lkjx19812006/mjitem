@@ -27,14 +27,21 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
-        showNode: cc.Node
+        showNode: cc.Node,
+        showAnimationClip: cc.AnimationClip
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
+        //创建一个动画组建
+        var animation = this.showNode.addComponent(cc.Animation);
+        //添加动画
+        animation.addClip(this.showAnimationClip, 'show');
+
         this.node.on(cc.Node.EventType.TOUCH_START, function (args) {
-            this.showNode.active = true
+            this.showNode.active = true;
+            animation.play('show')
         }, this)
 
     },

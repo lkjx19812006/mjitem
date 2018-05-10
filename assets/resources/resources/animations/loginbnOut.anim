@@ -3,32 +3,34 @@
   "_name": "loginbnOut",
   "_objFlags": 0,
   "_rawFiles": null,
-  "_duration": 0.4166666666666667,
+  "_duration": 0.25,
   "sample": 60,
   "speed": 1,
   "wrapMode": 1,
   "curveData": {
     "props": {
-      "scaleX": [
+      "scale": [
         {
           "frame": 0,
-          "value": 0.5,
-          "curve": "cubicOut"
+          "value": {
+            "__type__": "cc.Vec2",
+            "x": 1.05,
+            "y": 1.05
+          },
+          "curve": [
+            0.05,
+            0.83,
+            0.21,
+            0.93
+          ]
         },
         {
-          "frame": 0.4166666666666667,
-          "value": 1
-        }
-      ],
-      "scaleY": [
-        {
-          "frame": 0,
-          "value": 0.5,
-          "curve": "cubicOut"
-        },
-        {
-          "frame": 0.4166666666666667,
-          "value": 1
+          "frame": 0.25,
+          "value": {
+            "__type__": "cc.Vec2",
+            "x": 1,
+            "y": 1
+          }
         }
       ]
     }
