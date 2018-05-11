@@ -875,8 +875,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1280,
-      "height": 720
+      "width": 2280,
+      "height": 2720
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -931,10 +931,10 @@
     "isAlignOnce": true,
     "_target": null,
     "_alignFlags": 45,
-    "_left": 0,
-    "_right": 0,
-    "_top": 0,
-    "_bottom": 0,
+    "_left": -500,
+    "_right": -500,
+    "_top": -1000,
+    "_bottom": -1000,
     "_verticalCenter": 0,
     "_horizontalCenter": 0,
     "_isAbsLeft": true,
@@ -1133,7 +1133,7 @@
       }
     ],
     "_prefab": null,
-    "_id": "87m3RFzHFMWbD+HPK3TR4Z",
+    "_id": "5bqDrURkBJSox66tVvDqeM",
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -1160,7 +1160,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": -216,
-      "y": 66
+      "y": 123
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1185,7 +1185,7 @@
       }
     ],
     "_prefab": null,
-    "_id": "71nVBFmg5IgL2JOe4fHeG0",
+    "_id": "aaE2K7LLhGUp5Sam/WWYui",
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -1263,7 +1263,7 @@
       }
     ],
     "_prefab": null,
-    "_id": "e44OSOfghDT4f+F6twyGf5",
+    "_id": "a8x1WlALpExoVGP8nMtJ9H",
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -1341,7 +1341,7 @@
       }
     ],
     "_prefab": null,
-    "_id": "b5BgxR09VPf5VEkoMjCsrb",
+    "_id": "4c/cPwQbdANq1p7rLhrfh1",
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -1358,7 +1358,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 82,
+      "width": 64,
       "height": 32
     },
     "_rotationX": 0,
@@ -1393,7 +1393,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "规则1",
+    "_N$string": "自摸",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -1483,7 +1483,7 @@
       }
     ],
     "_prefab": null,
-    "_id": "5bqDrURkBJSox66tVvDqeM",
+    "_id": "87m3RFzHFMWbD+HPK3TR4Z",
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -1510,7 +1510,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": -216,
-      "y": 123
+      "y": 66
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1535,7 +1535,7 @@
       }
     ],
     "_prefab": null,
-    "_id": "aaE2K7LLhGUp5Sam/WWYui",
+    "_id": "71nVBFmg5IgL2JOe4fHeG0",
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -1613,7 +1613,7 @@
       }
     ],
     "_prefab": null,
-    "_id": "a8x1WlALpExoVGP8nMtJ9H",
+    "_id": "e44OSOfghDT4f+F6twyGf5",
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -1691,7 +1691,7 @@
       }
     ],
     "_prefab": null,
-    "_id": "4c/cPwQbdANq1p7rLhrfh1",
+    "_id": "b5BgxR09VPf5VEkoMjCsrb",
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -1708,7 +1708,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 82,
+      "width": 96,
       "height": 32
     },
     "_rotationX": 0,
@@ -1743,7 +1743,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "规则1",
+    "_N$string": "清一色",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -2024,8 +2024,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 452,
-      "height": 439
+      "width": 457,
+      "height": 417
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -2034,7 +2034,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 263.5,
-      "y": 0
+      "y": -11
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -2081,10 +2081,10 @@
     "_target": null,
     "_alignFlags": 34,
     "_left": 702.5,
-    "_right": 150.5,
+    "_right": 148,
     "_top": 0,
     "_bottom": 0,
-    "_verticalCenter": 0,
+    "_verticalCenter": -11,
     "_horizontalCenter": 0,
     "_isAbsLeft": true,
     "_isAbsRight": true,
@@ -2141,7 +2141,7 @@
       }
     ],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 135
@@ -2279,10 +2279,10 @@
     "isAlignOnce": true,
     "_target": null,
     "_alignFlags": 45,
-    "_left": 0,
-    "_right": 0,
-    "_top": 0,
-    "_bottom": 0,
+    "_left": -500,
+    "_right": -500,
+    "_top": -1000,
+    "_bottom": -1000,
     "_verticalCenter": 0,
     "_horizontalCenter": 0,
     "_isAbsLeft": true,
@@ -5101,6 +5101,15 @@
     },
     "enterRoomBn": {
       "__id__": 51
+    },
+    "checkQingyise": {
+      "__id__": 43
+    },
+    "checkZimo": {
+      "__id__": 35
+    },
+    "createConfirm": {
+      "__id__": 44
     }
   }
 ]

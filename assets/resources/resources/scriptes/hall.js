@@ -34,14 +34,20 @@ cc.Class({
         playerId: cc.Label,//用户id
         scoreNum: cc.Label,//分数
         createRoomBn: cc.Node,//创建房间
-        enterRoomBn: cc.Node//加入房间
+        enterRoomBn: cc.Node,//加入房间
+        checkQingyise: cc.Toggle,//清一色
+        checkZimo: cc.Toggle,//只允许自摸
+        createConfirm: cc.Node//确认创建
     },
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
+    onLoad() {
+
+    },
 
     start() {
+        var self = this;
         //进入大厅 调用服务器方法
         NetWorkManager.onConnectedToHall((hallService) => {
             this.hallService = hallService
@@ -63,15 +69,10 @@ cc.Class({
             })
         })
 
-        //监听创建房间事件            
-        this.createRoomBn.on(cc.Node.EventType.TOUCH_START, args => {
-            this.createRoom()
-        }, this)
-
-        //监听加入房间事件
-        this.enterRoomBn.on(cc.Node.EventType.TOUCH_START, args => {
-            this.joinRoom()
-        }, this)
+        //-------------------------------创建房间相关----------------------------------
+        CreatorHelper.setNodeClickEvent(this.createConfirm, function (event) {
+            self.createRoom()
+        })
 
 
         // ------------------------------加入房间相关-----------------------------------
@@ -81,7 +82,19 @@ cc.Class({
 
     createRoom() {
         if (!this.hallService) return;
-        this.hallService.emit('createroom', (data) => {
+        var custom = {}
+        custom.qingyise = this.checkQingyise.isChecked;
+        custom.zimo = this.checkZimo.isChecked;
+        this.hallService.emit('createroom', User.account, User.pass, custom, (data) => {
+            //设置房间号
+            User.createRoomId = data.roomId;
+
+            //链接到游戏服务器
+            NetWorkManager.connectAndAuthToGame(User.account, User.pass, data.gameUrl)
+            NetWorkManager.onConnectedToGame(() => {
+                console.log('跳转到游戏场景')
+                cc.director.loadScene("game");
+            })
             cc.log(data)
         })
     },
@@ -128,7 +141,7 @@ cc.Class({
             self.countIndex--;
             var numUi = cc.find('' + self.countIndex, self.shownumUi);
             var numLab = cc.find('txt', numUi).getComponent(cc.Label);
-            numLab.string = '';            
+            numLab.string = '';
             if (self.countIndex <= 0) { self.countIndex = 0 };
         })
 
@@ -143,19 +156,19 @@ cc.Class({
     resetShowNumUi() {
         //获取显示数字UI节点
         this.shownumUi = cc.find('joinmask/content/textwrap', this.node);
-        for (var i = 0; i < this.countIndex || 0; i++) {
+        this.countIndex = 0;
+        for (var i = 0; i <= 5; i++) {
             var numUi = cc.find('' + i, this.shownumUi);
             var numStr = cc.find("txt", numUi).getComponent(cc.Label);
             numStr.string = ''
         }
-        this.countIndex = 0;
     },
 
 
 
     joinRoom(roomNum) {
         if (!this.hallService) return;
-        this.hallService.emit('joinroom', roomNum, (data) => {
+        this.hallService.emit('joinroom', roomNum, User.playerId, this.hallService.id, (data) => {
             cc.log(data)
         })
     }
