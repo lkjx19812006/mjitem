@@ -36,8 +36,8 @@
     "_cascadeOpacityEnabled": true,
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
+      "x": 1,
+      "y": 1
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -50,8 +50,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 462,
-      "y": -138
+      "x": 0,
+      "y": 0
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -94,7 +94,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "d8ca3a95-8fbf-4793-ab24-0e3d48e303bd"
     },
     "fileId": "ccZs3T8rpCYaPdXk8G4oNr",
     "sync": false

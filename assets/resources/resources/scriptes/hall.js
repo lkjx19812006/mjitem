@@ -45,7 +45,7 @@ cc.Class({
         //进入大厅 调用服务器方法
         NetWorkManager.onConnectedToHall((hallService) => {
             this.hallService = hallService
-            console.log('进入大厅界面成功')
+            cc.log('进入大厅界面成功')
             this.hallService.emit('getPlayerBaseInfo', User.account, User.pass, (data) => {
                 if (data.ok && data.suc) {//获取信息成功
                     var baseInfo = data.data;
@@ -54,11 +54,11 @@ cc.Class({
                     this.scoreNum.string = baseInfo.score;
                     //头像
                     CreatorHelper.changeSpriteFrameWithServerUrl(this.headSprite, baseInfo.headimgurl)
-                    console.log('获取信息成功')
-                    console.log(data)
+                    cc.log('获取信息成功')
+                    cc.log(data)
 
                 } else {//获取信息失败
-                    console.log('获取信息失败')
+                    cc.log('获取信息失败')
                 }
             })
         })
@@ -73,18 +73,90 @@ cc.Class({
             this.joinRoom()
         }, this)
 
+
+        // ------------------------------加入房间相关-----------------------------------
+        this.HandlerinputRoomNum()
+
     },
 
     createRoom() {
         if (!this.hallService) return;
         this.hallService.emit('createroom', (data) => {
-            console.log(data)
+            cc.log(data)
         })
     },
-    joinRoom() {
+
+    //加入房间界面逻辑
+    HandlerinputRoomNum() {
+        //初始化当前点击次数
+        this.countIndex = 0;
+        var self = this;
+        //获取显示数字UI节点
+        this.shownumUi = cc.find('joinmask/content/textwrap', this.node);
+        //获取所有数字UI节点
+        this.inputnumsUi = cc.find("joinmask/content/inputwrap", this.node);
+        for (var num = 0; num <= 9; num++) {
+            var numUi = cc.find("" + num, this.inputnumsUi);
+            CreatorHelper.setNodeClickEvent(numUi, function (event) {
+                if (self.countIndex >= 6) { return }//限制乱点
+                cc.log('你当前点击了' + event.name);
+                var numUi = cc.find('' + self.countIndex, self.shownumUi);
+                var numLab = cc.find('txt', numUi).getComponent(cc.Label);
+                numLab.string = event.name;
+                self.countIndex += 1;
+
+                //判断如果点击次数值大于或等于6次 加入房间
+                if (self.countIndex === 6) {
+                    cc.log('加入房间，房间号：')
+                    var tableStr = '';
+                    for (var i = 0; i <= 5; i++) {
+                        var numUi = cc.find('' + i, self.shownumUi);
+                        var numStr = cc.find("txt", numUi).getComponent(cc.Label);
+                        tableStr += numStr.string
+                    }
+                    cc.log(tableStr)
+                    self.joinRoom(tableStr)
+                }
+
+            })
+        }
+
+        //删除按钮
+        var delbtn = cc.find('detel', this.inputnumsUi);
+        CreatorHelper.setNodeClickEvent(delbtn, function () {
+            if (self.countIndex === 0) { return };
+            self.countIndex--;
+            var numUi = cc.find('' + self.countIndex, self.shownumUi);
+            var numLab = cc.find('txt', numUi).getComponent(cc.Label);
+            numLab.string = '';            
+            if (self.countIndex <= 0) { self.countIndex = 0 };
+        })
+
+        //重输按钮
+        var reset = cc.find('reset', this.inputnumsUi);
+        CreatorHelper.setNodeClickEvent(reset, function () {
+            self.resetShowNumUi()
+        })
+
+    },
+    //重置房间显示UI
+    resetShowNumUi() {
+        //获取显示数字UI节点
+        this.shownumUi = cc.find('joinmask/content/textwrap', this.node);
+        for (var i = 0; i < this.countIndex || 0; i++) {
+            var numUi = cc.find('' + i, this.shownumUi);
+            var numStr = cc.find("txt", numUi).getComponent(cc.Label);
+            numStr.string = ''
+        }
+        this.countIndex = 0;
+    },
+
+
+
+    joinRoom(roomNum) {
         if (!this.hallService) return;
-        this.hallService.emit('joinroom', (data) => {
-            console.log(data)
+        this.hallService.emit('joinroom', roomNum, (data) => {
+            cc.log(data)
         })
     }
 
