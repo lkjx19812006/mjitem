@@ -87,15 +87,18 @@ cc.Class({
         custom.zimo = this.checkZimo.isChecked;
         this.hallService.emit('createroom', User.account, User.pass, custom, (data) => {
             //设置房间号
-            User.createRoomId = data.roomId;
+            User.roomId = data.roomId;
+            this.enterRoomHandler(User.account, User.pass)        
+        })
+    },
 
-            //链接到游戏服务器
-            NetWorkManager.connectAndAuthToGame(User.account, User.pass, data.gameUrl)
-            NetWorkManager.onConnectedToGame(() => {
-                console.log('跳转到游戏场景')
-                cc.director.loadScene("game");
-            })
-            cc.log(data)
+    //统一函数执行进入房间操作
+    enterRoomHandler(account, pass){
+        //链接到游戏服务器
+        NetWorkManager.connectAndAuthToGame(account, pass)
+        NetWorkManager.onConnectedToGame(() => {
+            console.log('跳转到游戏场景')
+            cc.director.loadScene("game");
         })
     },
 
@@ -121,14 +124,15 @@ cc.Class({
                 //判断如果点击次数值大于或等于6次 加入房间
                 if (self.countIndex === 6) {
                     cc.log('加入房间，房间号：')
-                    var tableStr = '';
+                    var roomNum = '';
                     for (var i = 0; i <= 5; i++) {
                         var numUi = cc.find('' + i, self.shownumUi);
                         var numStr = cc.find("txt", numUi).getComponent(cc.Label);
-                        tableStr += numStr.string
+                        roomNum += numStr.string
                     }
-                    cc.log(tableStr)
-                    self.joinRoom(tableStr)
+                    cc.log(roomNum)
+                    User.roomId = roomNum;
+                    self.enterRoomHandler(User.account, User.pass)
                 }
 
             })
@@ -163,17 +167,6 @@ cc.Class({
             numStr.string = ''
         }
     },
-
-
-
-    joinRoom(roomNum) {
-        if (!this.hallService) return;
-        this.hallService.emit('joinroom', roomNum, User.playerId, this.hallService.id, (data) => {
-            cc.log(data)
-        })
-    }
-
-
 
     // update (dt) {},
 });

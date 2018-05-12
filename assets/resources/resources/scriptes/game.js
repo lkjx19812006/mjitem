@@ -39,21 +39,45 @@ cc.Class({
         var self = this;
         NetWorkManager.onConnectedToGame((gameService) => {
             this.gameService = gameService;
-            console.log(gameService)
-            console.log('进入游戏房间成功，房间号' + self.roomId)
-            //获取房间信息
-            //1.如果自己不在房间信息中，加入到房间
+            cc.log(gameService)
+            cc.log('进入游戏房间成功，房间号' + self.roomId)
+            var playerInfo = {
+                nickName: User.nickName,//名字
+                headUrl: User.headUrl,//头像地址
+                score: User.score,//分数
+                playerId: User.playerId //玩家id
+            }
+            this.joinRoom(this.roomId, playerInfo, this.gameService.id)
 
-            //2.如果在
+            //初始化消息
+            this.initMessage()
+
+        })
+    },
+
+    initMessage() {
+        if (!this.gameService) return;
+        this.gameService.on('message', (data) => {
+            console.log('接收到服务器端的消息了')
+            console.log(data)
         })
 
-
     },
+
+
+    joinRoom(roomId, playerInfo, socketid) {
+        if (!this.gameService) return;
+        this.gameService.emit('joinRoom', roomId, playerInfo, socketid, (data) => {
+            cc.log('加入房间成功')
+            cc.log(data)
+        })
+    },
+
 
     getRoomInfo() {
         if (!this.gameService) return;
         this.gameService.emit('getTableInfos', this.roomId, (data) => {
-            console.log(data)
+            cc.log(data)
         })
 
     },

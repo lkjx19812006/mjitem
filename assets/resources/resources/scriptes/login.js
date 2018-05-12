@@ -8,6 +8,7 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 var LoginManager = require("LoginManager")
+var NetWorkManager = require('NetWorkManager')
 cc.Class({
     extends: cc.Component,
 
@@ -36,7 +37,13 @@ cc.Class({
 
     onLoad() {
         this.testLoginCom.setLoginEvents(function (account) {
-            LoginManager.testLogin(account)
+            LoginManager.testLogin(account, function(res){
+                NetWorkManager.connectAndAuthToHall(res.account, res.pass, res.hallUrl);
+                //校验成功 跳转到hall页面
+                NetWorkManager.onConnectedToHall(() => {
+                    cc.director.loadScene("hall");
+                })
+            })
         })
 
         // console.log(this.testLoginCom.setLoginEvents)

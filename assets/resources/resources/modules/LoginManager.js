@@ -1,12 +1,12 @@
 var http = require('httpServer')
-var NetWorkManager = require('NetWorkManager')
 class LoginManager {
     static weixinLogin() {
 
     }
 
     //调用服务器的测试登录接口，创建或者返回一个测试账号登录的结果
-    static testLogin(account) {
+    static testLogin(account, cb) {
+        if(!account || !cb)return
         http.fetch({
             url: '/user/testLogin',
             data: {
@@ -16,14 +16,43 @@ class LoginManager {
         }).then(res => {
             //登陆成功
             cc.log('登陆成功')
-            NetWorkManager.connectAndAuthToHall(res.account, res.pass, res.hallUrl);
-            //校验成功 跳转到hall页面
-            NetWorkManager.onConnectedToHall(() => {
-                cc.director.loadScene("hall");
-            })
+            cb && cb(res)         
         }, err => {
             console.log(err)
         })
     }
+
+    static hallLogin(account, pass, cb){
+        if(!account || !pass || !cb)return;
+        http.fetch({
+            url: '/user/hallLogin',
+            data: {
+                account: account,
+                pass: pass
+            },
+            method: 'post'
+        }).then(res => {
+            cb && cb(res);
+        }, err => {
+            console.log(err)
+        })
+    }
+
+    static gameLogin(account, pass, cb){
+        if(!account || !pass || !cb)return;
+        http.fetch({
+            url: '/user/gameLogin',
+            data: {
+                account: account,
+                pass: pass
+            },
+            method: 'post'
+        }).then(res => {
+            cb && cb(res);
+        }, err => {
+            console.log(err)
+        })
+    }
+
 }
 module.exports = LoginManager;
