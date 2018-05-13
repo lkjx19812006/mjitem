@@ -45,22 +45,21 @@ cc.Class({
         this.scoreUi = {};
 
         for (var i = 0; i < this.posCount; i++) {
-            this.headRoot[i] = cc.find('head' + i,this.node);
+            this.headRoot[i] = cc.find('head' + i, this.node);
             this.headSpUi[i] = cc.find('head' + i + '/head/headframe/headImg', this.node);
             this.nameUi[i] = cc.find('head' + i + '/head/name', this.node)
             this.scoreUi[i] = cc.find('head' + i + '/head/score', this.node)
         }
-        
+
         this.pInfos = {};//保存玩家信息
 
         this.clearToStart()
         //-------------------------------初始化UI相关结束-----------------------
 
 
-
-
+        //-------------------------------获取房间信息---------------------------
         //获取房间信息
-        this.roomId = User.roomId;             
+        this.roomId = User.roomId;
         var self = this;
         NetWorkManager.onConnectedToGame((gameService) => {
             this.gameService = gameService;
@@ -80,48 +79,54 @@ cc.Class({
             this.initMessage()
 
         })
+
+        //-------------------------------获取房间信息结束---------------------------
     },
 
-    clearToStart(){
-        for(var i = 0; i < this.posCount; i++){
-            this.headRoot[i].active  = false;
+    //------------------------------游戏界面UI操作相关--------------------------------
+
+    clearToStart() {
+        for (var i = 0; i < this.posCount; i++) {
+            this.headRoot[i].active = false;
             this.nameUi[i].getComponent(cc.Label).string = '';
             this.scoreUi[i].getComponent(cc.Label).string = '';
         }
-        
+
     },
 
-    getScreenPos(selfLogicPos, logicPos){
+    getScreenPos(selfLogicPos, logicPos) {
         var myPos = selfLogicPos;
-        var delta = Number(myPos) -2;
+        var delta = Number(myPos) - 2;
         var screenPos = Number(logicPos) - delta;
-        screenPos = screenPos < 0 ? 4 + screenPos:screenPos;
-        screenPos = screenPos >= 4 ? screenPos - 4:screenPos;
+        screenPos = screenPos < 0 ? 4 + screenPos : screenPos;
+        screenPos = screenPos >= 4 ? screenPos - 4 : screenPos;
         return screenPos;
     },
-    
 
-    showHead(pId, srcPos, imgUrl, name, scorenum){
-        this.headRoot[srcPos].active  = true;
+
+    showHead(pId, srcPos, imgUrl, name, scorenum) {
+        this.headRoot[srcPos].active = true;
         var sp = this.headSpUi[srcPos].getComponent(cc.Sprite);
         var nameLab = this.nameUi[srcPos].getComponent(cc.Label);
         var score = this.scoreUi[srcPos].getComponent(cc.Label);
         CreatorHelper.changeSpriteFrameWithServerUrl(sp, imgUrl);
         nameLab.string = name;
         score.string = scorenum;
-        var info =  UnitTools.getOrCreateJsonInJson(pId, this.pInfos);        
+        var info = UnitTools.getOrCreateJsonInJson(pId, this.pInfos);
         info.pos = srcPos
-     },
- 
-     hideHead(pId){
-         var info = this.pInfos[pId];
-         if(UnitTools.isNullOrUndefined(info))return;
-         var pos = info.pos;
-         this.headRoot[pos].active = false;
-     },
- 
-   
+    },
 
+    hideHead(pId) {
+        var info = this.pInfos[pId];
+        if (UnitTools.isNullOrUndefined(info)) return;
+        var pos = info.pos;
+        this.headRoot[pos].active = false;
+    },
+
+    //-------------------------------------游戏界面UI操作相关结束----------------------------
+
+
+    //-------------------------------------游戏界面逻辑处理----------------------------------
     initMessage() {
         if (!this.gameService) return;
         this.gameService.on('message', (data) => {
@@ -147,12 +152,13 @@ cc.Class({
         })
 
     },
+    //---------------------------------------游戏界面逻辑处理结束-----------------------------------
 
     start() {
         // this.test();
     },
 
-    test(){
+    test() {
         this.showHead(2, 0, 'http://i4.cfimg.com/583278/00e2ef22ec67b9b0.jpg', '鸡蛋', '100')
         this.showHead(3, 1, 'http://i4.cfimg.com/583278/00e2ef22ec67b9b0.jpg', '鸡蛋', '100')
         this.showHead(4, 2, 'http://i4.cfimg.com/583278/00e2ef22ec67b9b0.jpg', '鸡蛋', '100')

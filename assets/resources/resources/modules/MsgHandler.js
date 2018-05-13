@@ -47,13 +47,13 @@ class MsgHandler {
      * data 服务器返回的消息数据
      */
     joinRoom(data) {
-        console.log('===============================收到服务器消息：' +  data)
+        console.log('===============================收到服务器消息：' + data)
         var rooms = data.rooms
         //获取用户pos
         User.pos = this.getUserPos(data);
         cc.log('用户当前位置 :' + User.pos)
         if (rooms && typeof rooms === 'object') {
-            rooms.forEach((item, index) => {              
+            rooms.forEach((item, index) => {
                 var pId = User.playerId;
                 var srcpos = this.logicCom.getScreenPos(User.pos, index);
                 var imgUrl = item.playerInfo.headUrl;
