@@ -7,11 +7,9 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-var NetWorkManager = require('NetWorkManager')
 var CreatorHelper = require('CreatorHelper')
 var UnitTools = require('UnitTools')
 var User = require('User')
-var MsgHandler = require('MsgHandler')
 cc.Class({
     extends: cc.Component,
 
@@ -36,8 +34,6 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
-        //--------------------------------初始化UI相关-----------------------
-        MsgHandler.instance().logicCom = this;//将UI节点对象传递过去
         this.posCount = 4;
         this.headRoot = {};
         this.headSpUi = {};
@@ -54,32 +50,6 @@ cc.Class({
         this.pInfos = {};//保存玩家信息
 
         this.clearToStart()
-        //-------------------------------初始化UI相关结束-----------------------
-
-
-
-
-        //获取房间信息
-        this.roomId = User.roomId;             
-        var self = this;
-        NetWorkManager.onConnectedToGame((gameService) => {
-            this.gameService = gameService;
-            this.MsgHandler = MsgHandler.instance();
-
-            cc.log(gameService)
-            cc.log('进入游戏房间成功，房间号' + self.roomId)
-            var playerInfo = {
-                nickName: User.nickName,//名字
-                headUrl: User.headUrl,//头像地址
-                score: User.score,//分数
-                playerId: User.playerId //玩家id
-            }
-            this.joinRoom(this.roomId, playerInfo, this.gameService.id)
-
-            //初始化消息
-            this.initMessage()
-
-        })
     },
 
     clearToStart(){
@@ -100,52 +70,23 @@ cc.Class({
         return screenPos;
     },
     
-
     showHead(pId, srcPos, imgUrl, name, scorenum){
-        this.headRoot[srcPos].active  = true;
-        var sp = this.headSpUi[srcPos].getComponent(cc.Sprite);
-        var nameLab = this.nameUi[srcPos].getComponent(cc.Label);
-        var score = this.scoreUi[srcPos].getComponent(cc.Label);
-        CreatorHelper.changeSpriteFrameWithServerUrl(sp, imgUrl);
-        nameLab.string = name;
-        score.string = scorenum;
-        var info =  UnitTools.getOrCreateJsonInJson(pId, this.pInfos);        
-        info.pos = srcPos
-     },
- 
-     hideHead(pId){
-         var info = this.pInfos[pId];
-         if(UnitTools.isNullOrUndefined(info))return;
-         var pos = info.pos;
-         this.headRoot[pos].active = false;
-     },
- 
-   
-
-    initMessage() {
-        if (!this.gameService) return;
-        this.gameService.on('message', (data) => {
-            //消息执行
-            this.MsgHandler.handlerMessage(data)
-        })
+       this.headRoot[srcPos].active  = true;
+       var sp = this.headSpUi[srcPos].getComponent(cc.Sprite);
+       var nameLab = this.nameUi[srcPos].getComponent(cc.Label);
+       var score = this.scoreUi[srcPos].getComponent(cc.Label);
+       CreatorHelper.changeSpriteFrameWithServerUrl(sp, imgUrl);
+       nameLab.string = name;
+       score.string = scorenum;
+       var info =  UnitTools.getOrCreateJsonInJson(pId, this.pInfos);        
+       info.pos = srcPos
     },
 
-
-    joinRoom(roomId, playerInfo, socketid) {
-        if (!this.gameService) return;
-        this.gameService.emit('joinRoom', roomId, playerInfo, socketid, (data) => {
-            cc.log('加入房间成功')
-            cc.log(data)
-        })
-    },
-
-
-    getRoomInfo() {
-        if (!this.gameService) return;
-        this.gameService.emit('getTableInfos', this.roomId, (data) => {
-            cc.log(data)
-        })
-
+    hideHead(pId){
+        var info = this.pInfos[pId];
+        if(UnitTools.isNullOrUndefined(info))return;
+        var pos = info.pos;
+        this.headRoot[pos].active = false;
     },
 
     start() {
@@ -158,7 +99,6 @@ cc.Class({
         this.showHead(4, 2, 'http://i4.cfimg.com/583278/00e2ef22ec67b9b0.jpg', '鸡蛋', '100')
         this.showHead(5, 3, 'http://i4.cfimg.com/583278/00e2ef22ec67b9b0.jpg', '鸡蛋', '100')
     }
-
 
     // update (dt) {},
 });

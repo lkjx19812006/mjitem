@@ -88,12 +88,12 @@ cc.Class({
         this.hallService.emit('createroom', User.account, User.pass, custom, (data) => {
             //设置房间号
             User.roomId = data.roomId;
-            this.enterRoomHandler(User.account, User.pass)        
+            this.enterRoomHandler(User.account, User.pass)
         })
     },
 
     //统一函数执行进入房间操作
-    enterRoomHandler(account, pass){
+    enterRoomHandler(account, pass) {
         //链接到游戏服务器
         NetWorkManager.connectAndAuthToGame(account, pass)
         NetWorkManager.onConnectedToGame(() => {

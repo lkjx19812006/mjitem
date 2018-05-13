@@ -10,7 +10,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "headwig",
+    "_name": "head1",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -20,9 +20,13 @@
     ],
     "_tag": -1,
     "_active": true,
-    "_components": [],
+    "_components": [
+      {
+        "__id__": 17
+      }
+    ],
     "_prefab": {
-      "__id__": 17
+      "__id__": 18
     },
     "_id": "",
     "_opacity": 255,
@@ -50,8 +54,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
+      "x": 30,
+      "y": 480
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -248,7 +252,7 @@
       "__uuid__": "07282e7c-fb70-4d8e-bb3a-78328f3f129b"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -381,7 +385,7 @@
     "_isSystemFontUsed": true,
     "_spacingX": 0,
     "_N$string": "场合asdfa",
-    "_N$horizontalAlign": 0,
+    "_N$horizontalAlign": 1,
     "_N$verticalAlign": 0,
     "_N$fontFamily": "Arial",
     "_N$overflow": 1
@@ -520,6 +524,32 @@
     },
     "fileId": "fchMF+hMFAX4a2nH20Vfzy",
     "sync": false
+  },
+  {
+    "__type__": "cc.Widget",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "isAlignOnce": true,
+    "_target": null,
+    "_alignFlags": 9,
+    "_left": 30,
+    "_right": 1240,
+    "_top": 240,
+    "_bottom": 0,
+    "_verticalCenter": 0,
+    "_horizontalCenter": 0,
+    "_isAbsLeft": true,
+    "_isAbsRight": true,
+    "_isAbsTop": true,
+    "_isAbsBottom": true,
+    "_isAbsHorizontalCenter": true,
+    "_isAbsVerticalCenter": true,
+    "_originalWidth": 0,
+    "_originalHeight": 0
   },
   {
     "__type__": "cc.PrefabInfo",
