@@ -67,13 +67,20 @@ cc.Class({
 
             cc.log(gameService)
             cc.log('进入游戏房间成功，房间号' + self.roomId)
+            var socketId = this.gameService.id
             var playerInfo = {
                 nickName: User.nickName,//名字
                 headUrl: User.headUrl,//头像地址
                 score: User.score,//分数
-                playerId: User.playerId //玩家id
+                playerId: User.playerId, //玩家id
+                socketId: socketId,//客户端连接ID
+                playerState: 0,//用户状态0未准备 1准备 2离开
+                handCard: [],//用户手牌
+                hitCard: [],//用户打的牌
+                gang: [],//杠牌
+                peng: []//碰牌
             }
-            this.joinRoom(this.roomId, playerInfo, this.gameService.id)
+            this.joinRoom(this.roomId, playerInfo)
 
             //初始化消息
             this.initMessage()
@@ -136,9 +143,9 @@ cc.Class({
     },
 
 
-    joinRoom(roomId, playerInfo, socketid) {
+    joinRoom(roomId, playerInfo) {
         if (!this.gameService) return;
-        this.gameService.emit('joinRoom', roomId, playerInfo, socketid, (data) => {
+        this.gameService.emit('joinRoom', roomId, playerInfo, (data) => {
             cc.log('加入房间成功')
             cc.log(data)
         })

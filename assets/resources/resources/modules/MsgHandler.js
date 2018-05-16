@@ -29,7 +29,7 @@ class MsgHandler {
         var flag = -1;
         if (rooms && typeof rooms === 'object') {
             for (var i = 0; i < rooms.length; i++) {
-                var item = rooms[i].playerInfo;
+                var item = rooms[i];
                 if (item.playerId === User.playerId) {
                     flag = i;
                     break;
@@ -56,17 +56,16 @@ class MsgHandler {
             rooms.forEach((item, index) => {
                 var pId = User.playerId;
                 var srcpos = this.logicCom.getScreenPos(User.pos, index);
-                var imgUrl = item.playerInfo.headUrl;
-                var pname = item.playerInfo.nickName;
-                var scorenum = item.playerInfo.score
+                var imgUrl = item.headUrl;
+                var pname = item.nickName;
+                var scorenum = item.score
                 this.logicCom.showHead(pId, srcpos, imgUrl, pname, scorenum)
             });
         }
         cc.log('用户加入房间')
         cc.log(data);
     }
-
-
+    
     //--------------------------------------服务器消息事件结束-----------------------------------------------
 }
 
