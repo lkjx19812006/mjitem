@@ -69,6 +69,7 @@ cc.Class({
             cc.log('进入游戏房间成功，房间号' + self.roomId)
             var socketId = this.gameService.id
             var playerInfo = {
+                gameUrl: User.gameUrl,//游戏服务器地址
                 nickName: User.nickName,//名字
                 headUrl: User.headUrl,//头像地址
                 score: User.score,//分数

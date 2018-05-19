@@ -20,7 +20,10 @@ class MsgHandler {
 
     //消息执行函数
     handlerMessage(data) {
-        this[data.event](data.data)
+        if(this[data.event]){
+            this[data.event](data.data)
+        }
+        
     }
 
     //获取用户在服务器中的位置
@@ -66,6 +69,11 @@ class MsgHandler {
         cc.log(data);
     }
     
+    handCard(data){
+        console.log('===============================收到服务器发牌消息：' , data)
+    }
+
+
     //--------------------------------------服务器消息事件结束-----------------------------------------------
 }
 
