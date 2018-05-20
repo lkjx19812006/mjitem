@@ -20,10 +20,9 @@ class MsgHandler {
 
     //消息执行函数
     handlerMessage(data) {
-        if(this[data.event]){
+        if (this[data.event]) {
             this[data.event](data.data)
         }
-        
     }
 
     //获取用户在服务器中的位置
@@ -50,7 +49,7 @@ class MsgHandler {
      * data 服务器返回的消息数据
      */
     joinRoom(data) {
-        console.log('===============================收到服务器消息：' + data)
+        console.log('===============================收到服务器消息：%o', data)
         var rooms = data.rooms
         //获取用户pos
         User.pos = this.getUserPos(data);
@@ -68,9 +67,39 @@ class MsgHandler {
         cc.log('用户加入房间')
         cc.log(data);
     }
-    
-    handCard(data){
-        console.log('===============================收到服务器发牌消息：' , data)
+
+    startCard(data) {//发送手牌消息
+        console.log('绘制自己手牌UI：%o', data);
+        var cardIndexs = data;
+        for (var i = 0; i < 13; i++) {
+            //自己的手牌
+            var cardIndex = cardIndexs[i]
+            var cardUi = this.logicCom.createHandCardUi(2, cardIndex);
+            var pos = this.logicCom.handCardsPos[2][i];
+            cardUi.x = pos.x;
+            cardUi.y = pos.y;
+            this.logicCom.handCardUi.addChild(cardUi);//添加节点
+
+            var cardUi = this.logicCom.createHandCardUi(0);
+            var pos = this.logicCom.handCardsPos[0][i];
+            cardUi.x = pos.x;
+            cardUi.y = pos.y;
+            this.logicCom.handCardUi.addChild(cardUi);//添加节点
+
+            var cardUi = this.logicCom.createHandCardUi(1);
+            var pos = this.logicCom.handCardsPos[1][i];
+            cardUi.x = pos.x;
+            cardUi.y = pos.y;
+            this.logicCom.handCardUi.addChild(cardUi);//添加节点
+
+            var cardUi = this.logicCom.createHandCardUi(3);
+            var pos = this.logicCom.handCardsPos[3][i];
+            cardUi.x = pos.x;
+            cardUi.y = pos.y;
+            cardUi.setLocalZOrder(14 - i);
+            this.logicCom.handCardUi.addChild(cardUi);//添加节点
+        }
+
     }
 
 

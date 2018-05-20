@@ -12,6 +12,7 @@ var CreatorHelper = require('CreatorHelper')
 var UnitTools = require('UnitTools')
 var User = require('User')
 var MsgHandler = require('MsgHandler')
+var Majiang = require('Majiang').Majiang
 cc.Class({
     extends: cc.Component,
 
@@ -31,6 +32,11 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
+        handCards: {
+            default: [],
+            type: cc.Prefab
+        },
+        cardImages: cc.SpriteAtlas
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -51,9 +57,17 @@ cc.Class({
             this.scoreUi[i] = cc.find('head' + i + '/head/score', this.node)
         }
 
+        this.handCardUi = cc.find('handCards', this.node)//获取手牌的UI根节点
+
+        console.log(this.handCardUi)
+
         this.pInfos = {};//保存玩家信息
 
         this.clearToStart()
+        this.handCardsPos = this.createHandCardPos()
+        
+
+
         //-------------------------------初始化UI相关结束-----------------------
 
 
@@ -85,7 +99,6 @@ cc.Class({
 
             //初始化消息
             this.initMessage()
-
         })
 
         //-------------------------------获取房间信息结束---------------------------
@@ -99,6 +112,47 @@ cc.Class({
             this.nameUi[i].getComponent(cc.Label).string = '';
             this.scoreUi[i].getComponent(cc.Label).string = '';
         }
+
+    },
+
+    createHandCardPos() {//创建四个位置 手里牌的位置
+        var posArray = new Array(this.posCount);
+		posArray[0] = {startPos: { x: 300, y: 190 },offset: { x:-40, y: 0 },lastOffset: { x: -20, y: 0 }};
+		posArray[1] = {startPos: { x: -450, y: 290 },offset: { x: 0, y: -30},lastOffset: { x: 0, y: -30 }};
+		posArray[2] = {startPos: { x: -590, y: -340 },offset: { x: 83, y: 0 },lastOffset: { x: 20, y: 0 }};
+		posArray[3] = {startPos: { x: 450, y: -180 },offset: { x: 0, y: 30 },lastOffset: { x: 0, y: 30 }}
+		
+		var handCardsPos = new Array(this.posCount);
+		for(var pos = 0; pos < this.posCount; pos++){
+			var cardPos = new Array(14);
+			handCardsPos[pos] = cardPos;
+			for(var index = 0; index < 14; index++){
+				var position = cardPos[index] = {};
+				var config = posArray[pos];
+				position.x = config.startPos.x + index *  config.offset.x;
+                position.y = config.startPos.y + index * config.offset.y;
+                if(index === 13){
+                    position.x +=  config.lastOffset.x;
+                    position.y +=  config.lastOffset.y;
+                }
+			}
+		}
+        
+		return handCardsPos;
+    },
+
+    createHandCardUi(pos, cardIndex){
+        var pfb = this.handCards[pos];//获取预制
+        var cardUi = cc.instantiate(pfb);//实例化对象
+        if(pos === 2){
+            //修改spriteFarm
+            var sp = this.cardImages.getSpriteFrame(Majiang.smCard(cardIndex));
+            cardUi.getComponent(cc.Sprite).spriteFrame = sp;
+        }
+        return cardUi;
+    },
+
+    createHitCardPos() {//创建四个位置 打出去牌的位置
 
     },
 
@@ -167,12 +221,47 @@ cc.Class({
     },
 
     test() {
-        this.showHead(2, 0, 'http://i4.cfimg.com/583278/00e2ef22ec67b9b0.jpg', '鸡蛋', '100')
-        this.showHead(3, 1, 'http://i4.cfimg.com/583278/00e2ef22ec67b9b0.jpg', '鸡蛋', '100')
-        this.showHead(4, 2, 'http://i4.cfimg.com/583278/00e2ef22ec67b9b0.jpg', '鸡蛋', '100')
-        this.showHead(5, 3, 'http://i4.cfimg.com/583278/00e2ef22ec67b9b0.jpg', '鸡蛋', '100')
-    }
+        //----------------------创建头像测试------------------------------
+        // this.showHead(2, 0, 'http://i4.cfimg.com/583278/00e2ef22ec67b9b0.jpg', '鸡蛋', '100')
+        // this.showHead(3, 1, 'http://i4.cfimg.com/583278/00e2ef22ec67b9b0.jpg', '鸡蛋', '100')
+        // this.showHead(4, 2, 'http://i4.cfimg.com/583278/00e2ef22ec67b9b0.jpg', '鸡蛋', '100')
+        // this.showHead(5, 3, 'http://i4.cfimg.com/583278/00e2ef22ec67b9b0.jpg', '鸡蛋', '100')
+        
+        //----------------------手里牌测试--------------------------------
+        for(var i = 0; i < 14; i++){
+            var cardUi = this.createHandCardUi(2, 19);
+            var pos = this.handCardsPos[2][i];
+            cardUi.x = pos.x;
+            cardUi.y = pos.y;
+            this.handCardUi.addChild(cardUi);//添加节点
+
+            var cardUi = this.createHandCardUi(0, 19);
+            var pos = this.handCardsPos[0][i];
+            cardUi.x = pos.x;
+            cardUi.y = pos.y;
+            this.handCardUi.addChild(cardUi);//添加节点
+
+            var cardUi = this.createHandCardUi(1, 19);
+            var pos = this.handCardsPos[1][i];
+            cardUi.x = pos.x;
+            cardUi.y = pos.y;
+            this.handCardUi.addChild(cardUi);//添加节点
+
+            var cardUi = this.createHandCardUi(3, 19);
+            var pos = this.handCardsPos[3][i];
+            cardUi.x = pos.x;
+            cardUi.y = pos.y;
+            cardUi.setLocalZOrder(14 - i);
+            this.handCardUi.addChild(cardUi);//添加节点
+        }
+        
+
+    },
 
 
-    // update (dt) {},
+    update (dt) {
+        
+
+
+    },
 });
