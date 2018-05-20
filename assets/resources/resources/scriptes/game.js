@@ -65,8 +65,12 @@ cc.Class({
 
         this.clearToStart()
         this.handCardsPos = this.createHandCardPos()
-        
 
+        //自己手牌排序
+        this.selfHandCards = new Array(34);
+        for (var i = 0; i < 34; i++) {
+            this.selfHandCards[i] = {}
+        }
 
         //-------------------------------初始化UI相关结束-----------------------
 
@@ -117,39 +121,56 @@ cc.Class({
 
     createHandCardPos() {//创建四个位置 手里牌的位置
         var posArray = new Array(this.posCount);
-		posArray[0] = {startPos: { x: 300, y: 190 },offset: { x:-40, y: 0 },lastOffset: { x: -20, y: 0 }};
-		posArray[1] = {startPos: { x: -450, y: 290 },offset: { x: 0, y: -30},lastOffset: { x: 0, y: -30 }};
-		posArray[2] = {startPos: { x: -590, y: -340 },offset: { x: 83, y: 0 },lastOffset: { x: 20, y: 0 }};
-		posArray[3] = {startPos: { x: 450, y: -180 },offset: { x: 0, y: 30 },lastOffset: { x: 0, y: 30 }}
-		
-		var handCardsPos = new Array(this.posCount);
-		for(var pos = 0; pos < this.posCount; pos++){
-			var cardPos = new Array(14);
-			handCardsPos[pos] = cardPos;
-			for(var index = 0; index < 14; index++){
-				var position = cardPos[index] = {};
-				var config = posArray[pos];
-				position.x = config.startPos.x + index *  config.offset.x;
+        posArray[0] = { startPos: { x: 300, y: 190 }, offset: { x: -40, y: 0 }, lastOffset: { x: -20, y: 0 } };
+        posArray[1] = { startPos: { x: -450, y: 290 }, offset: { x: 0, y: -30 }, lastOffset: { x: 0, y: -30 } };
+        posArray[2] = { startPos: { x: -590, y: -340 }, offset: { x: 83, y: 0 }, lastOffset: { x: 20, y: 0 } };
+        posArray[3] = { startPos: { x: 450, y: -180 }, offset: { x: 0, y: 30 }, lastOffset: { x: 0, y: 30 } }
+
+        var handCardsPos = new Array(this.posCount);
+        for (var pos = 0; pos < this.posCount; pos++) {
+            var cardPos = new Array(14);
+            handCardsPos[pos] = cardPos;
+            for (var index = 0; index < 14; index++) {
+                var position = cardPos[index] = {};
+                var config = posArray[pos];
+                position.x = config.startPos.x + index * config.offset.x;
                 position.y = config.startPos.y + index * config.offset.y;
-                if(index === 13){
-                    position.x +=  config.lastOffset.x;
-                    position.y +=  config.lastOffset.y;
+                if (index === 13) {
+                    position.x += config.lastOffset.x;
+                    position.y += config.lastOffset.y;
                 }
-			}
-		}
-        
-		return handCardsPos;
+            }
+        }
+
+        return handCardsPos;
     },
 
-    createHandCardUi(pos, cardIndex){
+    createHandCardUi(pos, cardIndex) {
         var pfb = this.handCards[pos];//获取预制
         var cardUi = cc.instantiate(pfb);//实例化对象
-        if(pos === 2){
+        if (pos === 2) {
             //修改spriteFarm
             var sp = this.cardImages.getSpriteFrame(Majiang.smCard(cardIndex));
             cardUi.getComponent(cc.Sprite).spriteFrame = sp;
         }
         return cardUi;
+    },
+
+    //手牌排序
+    adjustSelfHandCard() {
+        var countIndex = 0;
+        for (var i = 33; i >= 0; i--) {
+            var card = this.selfHandCards[i];//从最后一个位置开始排 也就是从右往左
+            for(var cardIndex in card){
+                cardIndex = parseInt(cardIndex);
+                var ui = card[cardIndex].ui;
+                var index = 12 - countIndex;
+                countIndex++
+                var pos = this.handCardsPos[2][index];
+                ui.x = pos.x; ui.y = pos.y;
+            }
+        }
+
     },
 
     createHitCardPos() {//创建四个位置 打出去牌的位置
@@ -226,9 +247,9 @@ cc.Class({
         // this.showHead(3, 1, 'http://i4.cfimg.com/583278/00e2ef22ec67b9b0.jpg', '鸡蛋', '100')
         // this.showHead(4, 2, 'http://i4.cfimg.com/583278/00e2ef22ec67b9b0.jpg', '鸡蛋', '100')
         // this.showHead(5, 3, 'http://i4.cfimg.com/583278/00e2ef22ec67b9b0.jpg', '鸡蛋', '100')
-        
+
         //----------------------手里牌测试--------------------------------
-        for(var i = 0; i < 14; i++){
+        for (var i = 0; i < 14; i++) {
             var cardUi = this.createHandCardUi(2, 19);
             var pos = this.handCardsPos[2][i];
             cardUi.x = pos.x;
@@ -254,13 +275,13 @@ cc.Class({
             cardUi.setLocalZOrder(14 - i);
             this.handCardUi.addChild(cardUi);//添加节点
         }
-        
+
 
     },
 
 
-    update (dt) {
-        
+    update(dt) {
+
 
 
     },

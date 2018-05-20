@@ -79,6 +79,9 @@ class MsgHandler {
             cardUi.x = pos.x;
             cardUi.y = pos.y;
             this.logicCom.handCardUi.addChild(cardUi);//添加节点
+            var tIndex = Majiang.tIndex(cardIndex)
+            //设置手牌排序数组
+            this.logicCom.selfHandCards[tIndex]['' + cardIndex] = { ui: cardUi };
 
             var cardUi = this.logicCom.createHandCardUi(0);
             var pos = this.logicCom.handCardsPos[0][i];
@@ -99,6 +102,8 @@ class MsgHandler {
             cardUi.setLocalZOrder(14 - i);
             this.logicCom.handCardUi.addChild(cardUi);//添加节点
         }
+        //手牌重新排序
+        this.logicCom.adjustSelfHandCard()
 
     }
 
